@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	<!-- 配置自动扫描的包 -->
+	<context:component-scan base-package="com.sanxia.oa"
+		use-default-filters="false">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<!-- 导入外部配置文件 -->
+	<context:property-placeholder location="classpath:db.properties" />
+	<!-- 配置数据源,引入外部配置文件 -->
+	<bean id="ds" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="user" value="${user}" />
+		<property name="password" value="${password}" />
+		<property name="jdbcUrl" value="${url}" />
+		<property name="driverClass" value="${driver}" />
+
+		<property name="initialPoolSize" value="${initialPoolSize}"/>
+		<property name="minPoolSize" value="${minPoolSize}"/>
+		<property name="maxPoolSize" value="${maxPoolSize}"/>
+	</bean>
+	<!-- 配置sqlsessionFactoryBean -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds" />
+		<!-- 给包下实体类的文件取别名 -->
+		<property name="typeAliasesPackage" value="com.sanxia.oa.bean" />
+	</bean>
+	<!-- 配置自动扫描映射 -->
+	<bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.sanxia.oa.dao" />
+		<!-- 导入sqlsessionFactory -->
+		<property name="sqlSessionFactoryBeanName" value="sessionFactory" />
+	</bean>
+	<!-- 配置事务管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="ds" />
+	</bean>
+	<!-- 配置事务属性 -->
+	<tx:advice transaction-manager="transactionManager" id="txadvice">
+		<tx:attributes>
+			<tx:method name="add*" isolation="READ_COMMITTED"
+				propagation="REQUIRED" />
+			<tx:method name="select*" read-only="true" />
+			<tx:method name="upd*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="*" propagation="SUPPORTS" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- 配置AOP，让事务属性与切面关联起来 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.sanxia.oa.server.*.*(..))" id="pointcut"/>
+		<aop:advisor advice-ref="txadvice" pointcut-ref="pointcut"/>
+	</aop:config>
+</beans>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanxia.oa.dao.BackLogDao">
+<!-- 新增待办事项 -->
+<insert id="addbacklog" parameterType="BackLog">
+insert into BackLog  values(null,#{id},#{username},#{date},#{backLog})
+</insert>
+<!-- 查询待办事项总条数 -->
+<select id="selectBackLogCount" resultType="int" parameterType="int">
+select count(*) from BackLog where id = #{id}
+</select>
+<!-- 查看待办事项 -->
+<select id="selectBackLog" parameterType="Page" resultType="BackLog">
+select * from BackLog where id=#{totalCount} limit #{startNum},#{pageSize} 
+</select>
+<!-- 根据ID查询待办事项 -->
+<select id="selectbacklogById" parameterType="int" resultType="BackLog">
+select * from BackLog where backLogId = #{backLogId}
+</select>
+<!-- 修改待办事项 -->
+<update id="updateBackLog" parameterType="BackLog">
+update BackLog set date = #{date},backLog = #{backLog} where backLogId = #{id}
+</update>
+<!-- 删除待办事项 -->
+<delete id="deletebacklogById" parameterType="int">
+delete from BackLog where backLogId = #{backLogId}
+</delete>
+</mapper>

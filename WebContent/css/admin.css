@@ -1,0 +1,26 @@
+@CHARSET "UTF-8";
+.top{
+	position: fixed;
+	width: 100%;
+	top:0px;
+	height: 150px;
+	bottom: 5px;
+	background-color: #87CEFA;
+}
+.left{
+	position: fixed;
+	width: 250px;
+	height: 1000px;
+	bottom: 5px;
+	background-color: #DA70D6;
+	top: 150px;
+}
+.right{
+	position: fixed;
+	width: 1500px;
+	height: 1000px;
+	bottom: 5px;
+	background-color: #CDC5BF;
+	top: 150px;
+	left:250px;
+}

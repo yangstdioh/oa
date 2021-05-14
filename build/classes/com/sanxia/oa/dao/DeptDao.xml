@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanxia.oa.dao.DeptDao">
+<!-- 查询所有部门信息 -->
+<select id="selectAllDept" parameterType="Page" resultType="Dept">
+select * from dept limit #{startNum},#{pageSize}
+</select>
+<!-- 根据名称查找部门 -->
+<select id="selectDeptByName" parameterType="java.lang.String" resultType="Dept">
+select * from dept where deptName = #{deptName}
+</select>
+<!-- 根据ID删除部门 -->
+<delete id="delDeptById" parameterType="int">
+delete from dept where deptId = #{deptId}
+</delete>
+<!-- 查询部门总数 -->
+<select id="selectDeptCounts" resultType="int">
+select count(*) from dept 
+</select>
+<!-- 根据名称模糊查找部门 -->
+<select id="selectDeptVagueByName" parameterType="MohuPage" resultType="Dept">
+select * from dept where deptName like #{username} limit #{startNum},#{pageSize}
+</select>
+<!-- 模糊查询部门条数 -->
+<select id="selectDeptCount" parameterType="MohuPage" resultType="int">
+select count(*) from dept where deptName like #{username} 
+</select>
+<!-- 添加新部门 -->
+<insert id="addDept" parameterType="Dept">
+insert into dept(deptName,operator,addTime,upTime) values(#{deptName},#{operator},#{addTime},#{upTime})
+</insert>
+<!-- 根据ID查找部门 -->
+<select id="selectDeptById" parameterType="int" resultType="Dept">
+select * from dept where deptId = #{deptId}
+</select>
+<!-- 修改部门信息 -->
+<update id="updateDept" parameterType="Dept">
+update dept set deptName = #{deptName},operator = #{operator},upTime=#{upTime} where deptId = #{deptId}
+</update>
+</mapper>

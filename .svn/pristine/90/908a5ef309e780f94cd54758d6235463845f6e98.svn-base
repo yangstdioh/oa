@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanxia.oa.dao.UserDao">
+<!-- 查找用户 -->
+<select id="selectUser" parameterType="User" resultType="User">
+select * from user where username=#{username} and password=#{password}
+</select>
+<!-- 添加新用户 -->
+<insert id="addUser" parameterType="User">
+insert into user values(null,#{username},#{password},#{realname},#{age},#{sex},#{deptId},#{birthday},#{phonenumber},#{address},#{email},#{ismarriage},#{roleId})
+</insert>
+<!-- 查询所有用户 -->
+<select id="selectAllUser" parameterType="Page" resultType="User">
+select * from user limit #{startNum},#{pageSize}
+</select>
+<!-- 模糊查询用户 -->
+<select id="selectUserVague" parameterType="MohuPage" resultType="User">
+select * from user where username like #{username} or realname like #{username} limit #{startNum},#{pageSize}
+</select>
+<!-- 模糊查询用户数据数 -->
+<select id="selectUserVagueCount" parameterType="User" resultType="int">
+select count(*) from user where username like #{username} or realname like #{username}
+</select>
+<!-- 查询用户记录总数 -->
+<select id="selectUserCount" resultType="int">
+select count(*) from user
+</select>
+<!-- 根据ID删除用户 -->
+<delete id="delUserById" parameterType="int">
+delete from user where id=#{id}
+</delete>
+<!-- 根据用户名查找用户 -->
+<select id="selectUserByName" parameterType="java.lang.String" resultType="User"> 
+select * from user where username = #{username}
+</select>
+<!--根据ID查找用户 -->
+<select id="selectUserById" parameterType="int" resultType="User">
+select * from user where id=#{id} 
+</select>
+<!-- 修改用户信息 -->
+<update id="updateUser" parameterType="User">
+update user set realname = #{realname},age = #{age},sex = #{sex},deptId=#{deptId},birthday=#{birthday},phonenumber=#{phonenumber},address=#{address},email=#{email},ismarriage=#{ismarriage},roleId=#{roleId} where username=#{username}
+</update>
+<!-- 重置用户密码 -->
+<update id="resetUserPwd" parameterType="User">
+update user set password = #{password} where username=#{username}
+</update>
+<!-- 添加在线请假 -->
+<insert id="addLeave" parameterType="Leave">
+insert into LeaveTable values(null,#{userId},#{deptId},#{realName},#{startTime},#{endTime},#{leaveReason},0)
+</insert>
+<!-- 查询请假条数 -->
+<select id="selectLeaveCount" parameterType="int" resultType="int">
+select count(*) from LeaveTable where userId = #{userId}
+</select>
+<!-- 查看请假信息 -->
+<select id="selectLeave" parameterType="Page" resultType="Leave">
+select * from LeaveTable where userId = #{totalCount} limit #{startNum},#{pageSize}
+</select>
+<!-- 根据ID查询请假信息 -->
+<select id="selectLeaveByLeaveId" parameterType="int" resultType="Leave">
+select * from LeaveTable where leaveId = #{leaveId}
+</select>
+<!-- 根据ID删除请假记录 -->
+<delete id="delLeaveByLeaveId" parameterType="int">
+delete from LeaveTable where leaveId = #{leaveId}
+</delete>
+<!-- 修改请假信息 -->
+<update id="updateLeave" parameterType="Leave">
+update LeaveTable set startTime = #{startTime},endTime = #{endTime},leaveReason = #{leaveReason} where leaveId = #{userId}
+</update>
+<!-- 查询待审批请假记录数 -->
+<select id="selectLeaveCounts" parameterType="int" resultType="int">
+select count(*) from LeaveTable where deptId = #{deptId} and statement =0
+</select>
+<!-- 查询待审批请假记录-->
+<select id="selectLeaveBydeptId" parameterType="Page" resultType="Leave">
+select * from LeaveTable where deptId = #{totalCount} and statement =0 limit #{startNum},#{pageSize}
+</select>
+<!-- 审批请假记录 -->
+<select id="opproveLeaveByLeaveId" parameterType="Leave">
+update LeaveTable set statement = #{statement} where leaveId = #{leaveId}
+</select>
+</mapper>

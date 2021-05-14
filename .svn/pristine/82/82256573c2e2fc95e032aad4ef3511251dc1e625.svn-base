@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanxia.oa.dao.SignDao">
+<!-- 添加MAC地址 -->
+<insert id="addSign" parameterType="Sign">
+insert into Sign values(null,#{username},#{macaddress}) 
+</insert>
+<!-- 根据名称查找记录 -->
+<select id="selectSignByName" parameterType="java.lang.String" resultType="Sign">
+select * from Sign where username = #{username}
+</select>
+<!-- 修改用户MAC地址 -->
+<update id="updateSign" parameterType="Sign">
+update Sign set macaddress = #{macaddress} where username = #{username}
+</update>
+<!-- 添加签到记录 -->
+<insert id="addSignInfor" parameterType="SignInfor">
+insert into signinfor values(null,#{userid},#{username},#{macAddr},#{date},#{time})
+</insert>
+<!-- 根据名称查找签到记录 -->
+<select id="selectSignInforByName" parameterType="SignInfor" resultType="SignInfor">
+select * from signinfor where username = #{username} and time = #{time}
+</select>
+<!--  查询签到记录条数 -->
+<select id="selectSignInforByUserid" parameterType="int" resultType="int">
+select count(*) from signinfor where userid = #{userid}
+</select>
+<!-- 根据用户ID查询签到记录 -->
+<select id="selectAllSignInfor" parameterType="Page" resultType="SignInfor">
+select * from signinfor where userid = #{totalCount}  limit #{startNum},#{pageSize}
+</select>
+</mapper>	

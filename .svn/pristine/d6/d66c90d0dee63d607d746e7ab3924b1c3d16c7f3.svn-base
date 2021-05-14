@@ -1,0 +1,133 @@
+@CHARSET "UTF-8";
+          aside {
+				position: fixed;
+				width: 200px;
+				top: 155px;
+				bottom: 5px;
+				left: 0px;
+				background-color: #87CEFA;
+			}
+			aside ul {
+				width: 180px;
+				margin: 5px auto 0px;
+				background-color: #FFF;
+				padding: 0px;
+				border-radius: 5px;
+			}
+			aside ul li {
+				width: 100%;
+				text-align: center;
+				line-height: 30px;
+				margin: 1px 0px;
+			}
+			aside ul li:hover {
+				background-color: #EBEBEB;
+			}
+			aside ul li a {
+				color: #525252;
+				text-decoration: none; /* 去除超链接的下划线 */
+			}
+			article {
+				position: fixed;
+				top: 100px;
+				right: 0px;
+				bottom: 5px;
+				left: 200px;
+				/*background-color: lightcyan;*/
+			}
+			article .label{
+				position: relative; /* 相对定位    相对于四周相邻元素定位 或 相对于父级元素定位 */
+				width: 100%;
+				height: 30px;
+			}
+			article .label dl {
+				height: 30px;
+				margin: 0px;
+				padding: 0px;
+				border-bottom: solid 1px lightgray;
+			}
+			article .label dl dt {
+				position: relative;
+				width: 80px;
+				text-align: center;
+				line-height: 29px;
+				margin: 1px 5px 0px;
+				border-top: solid 1px lightgray;
+				border-right: solid 1px lightgray;
+				border-left: solid 1px lightgray;
+				border-top-left-radius: 5px;
+				border-top-right-radius: 5px;
+				float: left; /* 浮动 */
+				background-color: #FFF;
+			}
+			article .label dl dt a {
+				text-decoration: none;
+				color: #525252;
+			}
+			article .label dl dt span {
+				position: absolute;
+				width: 12px;
+				line-height: 16px;
+				text-align: center;
+				top: 0px;
+				right: 0px;
+				border-left: solid 1px lightgray;
+				border-bottom: solid 1px lightgray;
+				color: gray;
+				cursor: pointer;
+			}
+			article .pageBody {
+				position: relative;
+				width: 100%;
+				height: 100%;
+			}
+			footer {
+				position: fixed;
+				height: 5px;
+				right: 0px;
+				bottom: 0px;
+				left: 0px;
+				background-color: #5CACEE;
+			}
+			.logo {
+				position: absolute;
+				top: 15px;
+				left: 80px;
+			}
+			.shut_down {
+				position: absolute;
+				top: 10px;
+				right: 80px;
+				cursor: pointer;
+			}
+			.logo_title {
+				position: absolute;
+				width: 230px;
+				top: 40px;
+				left: 160px;
+				font-size: 18px;
+				font-weight: bold;
+				color: #FFF;
+			}
+			.login_message {
+				position: absolute;
+				top: 75px;
+				right: 60px;
+			}
+			.menu_active {
+				background-color: #5CACEE !important; /* !important 最高优先级 */
+			}
+			.menu_active a {
+				color: #FFF;
+			}
+			.menu_active_first {
+				border-top-left-radius: 5px;
+				border-top-right-radius: 5px;
+			}
+			.menu_active_last {
+				border-bottom-left-radius: 5px;
+				border-bottom-right-radius: 5px;
+			}
+			.menu_hidden {
+				display: none;
+			}

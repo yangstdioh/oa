@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanxia.oa.dao.EmailDao">
+<!-- 发送新邮件 -->
+<insert id="addEmail" parameterType="Email">
+insert into email values(null,#{userId},#{username},#{receive},#{emaiAddr},#{date},#{subject},#{emailContent})
+</insert>
+<!-- 查询已发送邮件记录数 -->
+<select id="selectEmailCount" parameterType="int" resultType="int">
+select count(*) from email where userId = #{userId}
+</select>
+<!-- 查询已发送邮件记录 -->
+<select id="selectEmail" parameterType="Page" resultType="Email">
+select * from email where userId = #{totalCount} limit #{startNum},#{pageSize}
+</select>
+<!-- 根据ID删除已发送邮件 -->
+<delete id="delEmaiById" parameterType="int">
+delete from email where emailId =#{emailId}
+</delete>
+<!-- 查询用户列表 -->
+<select id="selectUsers" resultType="User">
+select username,id from user
+</select>
+<!-- 发送新信息 -->
+<insert id="sendMessage" parameterType="Message">
+insert into message values(null,#{sendId},#{sendName},#{time},#{receiveId},#{message},#{statement})
+</insert>
+<!-- 查询是否有未读信息 -->
+<select id="selectMesCount" parameterType="int" resultType="int">
+select count(*) from message where receiveId = #{userId} and statement = 1
+</select>
+<!-- 查询未读信息 -->
+<select id="selectUnreadMes" parameterType="Page" resultType="Message">
+select * from message where receiveId = #{totalCount} and statement = 1 limit #{startNum},#{pageSize}
+</select>
+<!-- 将消息设为已读 -->
+<update id="messageReaded" parameterType="int">
+update message set statement = 2 where mesId = #{mesId}
+</update>
+<!-- 根据ID查找信息 -->
+<select id="selectMessageById" parameterType="int" resultType="Message">
+select * from message where mesId = #{mesId}
+</select>
+</mapper>

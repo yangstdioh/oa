@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanxia.oa.dao.FileDao">
+<!-- 上传审批文件 -->
+<insert id="addDocument" parameterType="UploadFile">
+insert into file values(null,#{userId},#{userName},#{fileName},#{time},#{deptId},#{statement},#{file})
+</insert>
+<!-- 根据名称查询文件 -->
+<select id="selectUploadFileByName" parameterType="java.lang.String" resultType="UploadFile">
+select * from file where fileName = #{fileName}
+</select>
+<!-- 根据部门查询待审批公文 -->
+<select id="selectDocument" parameterType="Page" resultType="UploadFile">
+select * from file where deptId = #{totalCount} and statement = 0 limit #{startNum},#{pageSize}
+</select>
+<!-- 查询待审批公文条数 -->
+<select id="selectDocumentCount" parameterType="int" resultType="int">
+select count(*) from file where deptId = #{deptId} and statement = 0
+</select>
+<!-- 审批在线公文 -->
+<update id="updateDocument">
+update file set statement=#{1} where fileId =#{0}
+</update>
+<!-- 查询上传公文记录条数 -->
+<select id="selectUploadDocumentCounts" parameterType="int" resultType="int">
+select count(*) from file where userId = #{userId}
+</select>
+<!-- 查询已经上传公文 -->
+<select id="selectUploadDocument" parameterType="Page" resultType="UploadFile">
+select * from file  where userId = #{totalCount}  limit #{startNum},#{pageSize}
+</select>
+</mapper>
